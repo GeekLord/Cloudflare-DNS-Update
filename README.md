@@ -137,5 +137,3 @@ This is the new IP address that you want your DNS records to point to. This is t
 ---
 
 This script simplifies the process of updating DNS records in Cloudflare when moving to a new host. By automating the task, it reduces the risk of human error and saves time. Ensure you have the correct values for the required variables and test the script before using it in a production environment.
-
-Let me know if you need further assistance!
