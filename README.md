@@ -1,6 +1,6 @@
 # Cloudflare DNS Update Script
 
-This script automates the process of updating DNS records in Cloudflare when moving a domain to a new host. It fetches all domains (zones) in your Cloudflare account, identifies DNS records pointing to an old server IP, and updates them to a new server IP.
+This script automates the process of updating DNS records in Cloudflare when moving the hosting to a new host or changing the IP. It fetches all domains (zones) in your Cloudflare account, identifies DNS records pointing to an old server IP, and updates them to a new server IP.
 
 ## Author
 **Shobhit Kumar Prabhakar**
