@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Author: Shobhit Kumar Pravhakar
+
 # Description: Script to update DNS records in Cloudflare for all domains when moving to a new host.
 
 # Variables
-auth_email="YOUR_LOGIN_ID"               # Your Cloudflare account email
-auth_key="YOUR_CLOUDFLARE_AUTH_KEY"      # Your Cloudflare API key
-old_ip="OLD_SERVER_IP"                   # Old server IP address
-new_ip="NEW_SERVER_IP"                   # New server IP address
+api_token="your_api_token_here"  # Your Cloudflare API token (replace with actual token)
+old_ip="1.1.1.1"          # Old server IP address
+new_ip="2.2.2.2"          # New server IP address
 
 # Logging function
 log() {
@@ -23,7 +23,7 @@ validate_ip() {
 }
 
 # Validate required variables
-if [[ -z "$auth_email" || -z "$auth_key" || -z "$old_ip" || -z "$new_ip" ]]; then
+if [[ -z "$api_token" || -z "$old_ip" || -z "$new_ip" ]]; then
     log "Error: One or more required variables are not set."
     exit 1
 fi
@@ -35,9 +35,7 @@ validate_ip "$new_ip"
 # Fetch all zones (domains) in a single request
 log "Fetching all zones (domains) in the Cloudflare account..."
 response=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?per_page=500" \
-    -H "X-Auth-Email: $auth_email" \
-    -H "X-Auth-Key: $auth_key" \
-    -H "Content-Type: application/json")
+    -H "Authorization: Bearer $api_token")
 
 # Check if the API request was successful
 if [[ $(echo "$response" | jq -r '.success') != "true" ]]; then
@@ -47,7 +45,6 @@ fi
 
 # Extract zone IDs and domain names
 zone_ids=$(echo "$response" | jq -r '.result[].id')
-domain_names=$(echo "$response" | jq -r '.result[].name')
 
 if [[ -z "$zone_ids" ]]; then
     log "No domains found in the Cloudflare account."
@@ -64,9 +61,7 @@ for zone_id in $zone_ids; do
     # Fetch DNS records pointing to the old IP
     log "Fetching DNS records for domain $domain_name pointing to $old_ip..."
     record_list=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?per_page=500&type=A&content=${old_ip}" \
-        -H "X-Auth-Email: $auth_email" \
-        -H "X-Auth-Key: $auth_key" \
-        -H "Content-Type: application/json")
+        -H "Authorization: Bearer $api_token")
 
     # Check if the API request was successful
     if [[ $(echo "$record_list" | jq -r '.success') != "true" ]]; then
@@ -88,8 +83,7 @@ for zone_id in $zone_ids; do
     for id in $record_ids; do
         log "Updating DNS record $id to point to $new_ip..."
         response=$(curl -s -X PATCH "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${id}" \
-            -H "X-Auth-Email: $auth_email" \
-            -H "X-Auth-Key: $auth_key" \
+            -H "Authorization: Bearer $api_token" \
             -H "Content-Type: application/json" \
             --data "{\"content\":\"$new_ip\"}")
 
