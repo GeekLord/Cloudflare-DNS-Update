@@ -1,3 +1,11 @@
+<div align="center">
+
+  <a href="https://shobhit.net/"><img src="https://img.shields.io/badge/Website-shobhit.net-blue?style=for-the-badge&logo=google-chrome" alt="Website" /></a> <a href="https://x.com/Shobhit"><img src="https://img.shields.io/badge/Twitter-%40Shobhit-black?style=for-the-badge&logo=x" alt="Twitter" /></a> <a href="https://linkedin.com/in/geeklord/"><img src="https://img.shields.io/badge/LinkedIn-GeekLord-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn" /></a> <a href="https://github.com/GeekLord/"><img src="https://img.shields.io/badge/GitHub-GeekLord-181717?style=for-the-badge&logo=github" alt="GitHub" /></a> <a href="https://g.dev/Shobhit"><img src="https://img.shields.io/badge/Google Dev-Shobhit-blue?style=for-the-badge&logo=google" alt="Google Dev" /></a>
+
+  <img src="https://img.shields.io/badge/Shell-informational?style=for-the-badge&logo=gnu-bash" alt="badge" /> <img src="https://img.shields.io/github/stars/GeekLord/Cloudflare-DNS-Update?style=for-the-badge&logo=github" alt="badge" /> <img src="https://img.shields.io/github/forks/GeekLord/Cloudflare-DNS-Update?style=for-the-badge&logo=github" alt="badge" /> <img src="https://img.shields.io/github/last-commit/GeekLord/Cloudflare-DNS-Update?style=for-the-badge" alt="badge" />
+
+</div>
+
 # Cloudflare DNS Update Script
 
 This script automates the process of updating DNS records in Cloudflare when moving the hosting to a new host or changing the IP. It fetches all domains (zones) in your Cloudflare account, identifies DNS records pointing to an old server IP, and updates them to a new server IP.
