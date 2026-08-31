@@ -8,7 +8,7 @@
 api_token="your_api_token_here"  # Your Cloudflare API token (replace with actual token)
 old_ip="1.1.1.1"          # Old server IP address
 new_ip="2.2.2.2"          # New server IP address
-dry_run="true"            # Set to "true" to simulate updates without modifying Cloudflare
+dry_run="false"           # Set to "true" to simulate updates without modifying Cloudflare
 
 # Logging function
 log() {
@@ -87,9 +87,7 @@ for zone_id in $zone_ids; do
 
     # Update each DNS record
     for id in $record_ids; do
-        if [[ "$dry_run" == "true" ]]; then
-            log "[DRY RUN] Would update DNS record $id to point to $new_ip..."
-        else
+        if [[ "$dry_run" == "false" ]]; then
             log "Updating DNS record $id to point to $new_ip..."
             response=$(curl -s -X PATCH "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${id}" \
                 -H "Authorization: Bearer $api_token" \
@@ -102,11 +100,19 @@ for zone_id in $zone_ids; do
             else
                 log "Successfully updated DNS record $id for domain $domain_name."
             fi
+
+            # Add a delay to avoid hitting rate limits
+            sleep 1
+
+        else
+            log "[DRY RUN] Would update DNS record $id to point to $new_ip..."
         fi
 
-        # Add a delay to avoid hitting rate limits
-        sleep 1
     done
 done
 
-log "DNS update process completed for all domains."
+if [[ "$dry_run" == "false" ]]; then
+    log "DNS update process completed for all domains."
+else
+    log "[DRY RUN] DNS update process completed for all domains. No changes were made."
+fi
