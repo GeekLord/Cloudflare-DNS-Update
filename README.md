@@ -24,6 +24,7 @@ This script automates the process of updating DNS records in Cloudflare when mov
    - [Cloudflare API Key (`auth_key`)](#cloudflare-api-key-auth_key)
    - [Old Server IP (`old_ip`)](#old-server-ip-old_ip)
    - [New Server IP (`new_ip`)](#new-server-ip-new_ip)
+   - [Dry Run (`dry_run`)](#dry-run-dry_run)
 4. [How to Use the Script](#how-to-use-the-script)
 5. [Script Workflow](#script-workflow)
 6. [Example Output](#example-output)
@@ -75,6 +76,9 @@ This is the current IP address that your DNS records are pointing to. You can fi
 ### New Server IP (`new_ip`)
 This is the new IP address that you want your DNS records to point to. This is typically provided by your new hosting provider.
 
+### Dry Run (`dry_run`)
+This flag allows you to test the script without actually modifying any DNS records in Cloudflare. It is set to `"false"` by default for live updates, but you can set it to `"true"` to simulate changes.
+
 ---
 
 ## How to Use the Script
@@ -95,6 +99,7 @@ This is the new IP address that you want your DNS records to point to. This is t
      auth_key="1234567890abcdef1234567890abcdef"
      old_ip="192.0.2.1"
      new_ip="203.0.113.1"
+     dry_run="false"
      ```
 
 4. **Run the Script**:
